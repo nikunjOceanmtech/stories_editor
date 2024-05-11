@@ -24,27 +24,7 @@ class ToolButton extends StatelessWidget {
       child: AnimatedOnTapButton(
         onTap: onTap,
         onLongPress: onLongPress,
-        child: Padding(
-          padding: padding ?? const EdgeInsets.symmetric(horizontal: 10),
-          child: Material(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(90),
-            elevation: 1,
-            shadowColor: Colors.black.withOpacity(0.5),
-            child: Container(
-              height: 35,
-              width: 35,
-              decoration: BoxDecoration(
-                  color: backGroundColor ?? Colors.transparent,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: colorBorder, width: 2)),
-              child: Transform.scale(
-                scale: 0.8,
-                child: child,
-              ),
-            ),
-          ),
-        ),
+        child: child,
       ),
     );
   }
