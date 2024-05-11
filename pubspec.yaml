@@ -24,9 +24,10 @@ dependencies:
   image_gallery_saver: ^2.0.3
   #own packages
   # gallery_media_picker: ^0.1.0
-
-
-  modal_gif_picker: ^0.0.2
+  modal_gif_picker:
+    git:
+      url: https://github.com/JenilChandaranaOceanmtech/modal_gif_picker.git
+      ref: d80ac7c33f6d1a3e84db62821d69077af14614ac
   # painting
   perfect_freehand: ^2.3.2
   # positioning
