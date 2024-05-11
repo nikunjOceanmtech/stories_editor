@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:stories_editor/stories_editor.dart';
 
 void main() {
@@ -7,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class Example extends StatefulWidget {
-  const Example({Key? key}) : super(key: key);
+  const Example({super.key});
 
   @override
   State<Example> createState() => _ExampleState();
@@ -47,7 +46,7 @@ class _ExampleState extends State<Example> {
                             //isCustomFontList: true,
                             onDone: (uri) {
                               debugPrint(uri);
-                              Share.shareFiles([uri]);
+                              // Share.shareFiles([uri]);
                             },
                           )));
             },

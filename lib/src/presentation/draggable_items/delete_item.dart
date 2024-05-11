@@ -5,13 +5,12 @@ import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 
 class DeleteItem extends StatelessWidget {
   const DeleteItem(
-      {Key? key,
+      {super.key,
       required EditableItem? activeItem,
       required this.isDeletePosition,
       required this.animationsDuration,
       this.deletedItem})
-      : _activeItem = activeItem,
-        super(key: key);
+      : _activeItem = activeItem;
 
   final EditableItem? _activeItem;
   final bool isDeletePosition;
@@ -29,9 +28,7 @@ class DeleteItem extends StatelessWidget {
         child: AnimatedScale(
           curve: Curves.easeIn,
           duration: const Duration(milliseconds: 200),
-          scale: _activeItem != null && _activeItem!.type != ItemType.image
-              ? 1.0
-              : 0.0,
+          scale: _activeItem != null && _activeItem!.type != ItemType.image ? 1.0 : 0.0,
           child: SizedBox(
             width: screenUtil.screenWidth,
             child: Center(
@@ -65,8 +62,7 @@ class DeleteItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: const ImageIcon(
-                      AssetImage('assets/icons/trash.png',
-                          package: 'stories_editor'),
+                      AssetImage('assets/icons/trash.png', package: 'stories_editor'),
                       color: Colors.white,
                       size: 23,
                     ),

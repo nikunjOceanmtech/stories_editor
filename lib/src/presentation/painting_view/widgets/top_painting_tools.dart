@@ -7,13 +7,13 @@ import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
 import 'package:stories_editor/src/presentation/widgets/tool_button.dart';
 
 class TopPaintingTools extends StatefulWidget {
-  const TopPaintingTools({Key? key}) : super(key: key);
+  const TopPaintingTools({super.key});
 
   @override
-  _TopPaintingToolsState createState() => _TopPaintingToolsState();
+  TopPaintingToolsState createState() => TopPaintingToolsState();
 }
 
-class _TopPaintingToolsState extends State<TopPaintingTools> {
+class TopPaintingToolsState extends State<TopPaintingTools> {
   @override
   Widget build(BuildContext context) {
     return Consumer2<ControlNotifier, PaintingNotifier>(
@@ -36,8 +36,7 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                     child: Transform.scale(
                         scale: 0.6,
                         child: const ImageIcon(
-                          AssetImage('assets/icons/return.png',
-                              package: 'stories_editor'),
+                          AssetImage('assets/icons/return.png', package: 'stories_editor'),
                           color: Colors.white,
                         )),
                   ),
@@ -47,22 +46,16 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                   onTap: () {
                     paintingNotifier.paintingType = PaintingType.pen;
                   },
-                  colorBorder: paintingNotifier.paintingType == PaintingType.pen
-                      ? Colors.black
-                      : Colors.white,
+                  colorBorder: paintingNotifier.paintingType == PaintingType.pen ? Colors.black : Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  backGroundColor:
-                      paintingNotifier.paintingType == PaintingType.pen
-                          ? Colors.white.withOpacity(0.9)
-                          : Colors.black12,
+                  backGroundColor: paintingNotifier.paintingType == PaintingType.pen
+                      ? Colors.white.withOpacity(0.9)
+                      : Colors.black12,
                   child: Transform.scale(
                       scale: 1.2,
                       child: ImageIcon(
-                        const AssetImage('assets/icons/pen.png',
-                            package: 'stories_editor'),
-                        color: paintingNotifier.paintingType == PaintingType.pen
-                            ? Colors.black
-                            : Colors.white,
+                        const AssetImage('assets/icons/pen.png', package: 'stories_editor'),
+                        color: paintingNotifier.paintingType == PaintingType.pen ? Colors.black : Colors.white,
                       )),
                 ),
 
@@ -71,24 +64,16 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                   onTap: () {
                     paintingNotifier.paintingType = PaintingType.marker;
                   },
-                  colorBorder:
-                      paintingNotifier.paintingType == PaintingType.marker
-                          ? Colors.black
-                          : Colors.white,
+                  colorBorder: paintingNotifier.paintingType == PaintingType.marker ? Colors.black : Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  backGroundColor:
-                      paintingNotifier.paintingType == PaintingType.marker
-                          ? Colors.white.withOpacity(0.9)
-                          : Colors.black12,
+                  backGroundColor: paintingNotifier.paintingType == PaintingType.marker
+                      ? Colors.white.withOpacity(0.9)
+                      : Colors.black12,
                   child: Transform.scale(
                       scale: 1.2,
                       child: ImageIcon(
-                        const AssetImage('assets/icons/marker.png',
-                            package: 'stories_editor'),
-                        color:
-                            paintingNotifier.paintingType == PaintingType.marker
-                                ? Colors.black
-                                : Colors.white,
+                        const AssetImage('assets/icons/marker.png', package: 'stories_editor'),
+                        color: paintingNotifier.paintingType == PaintingType.marker ? Colors.black : Colors.white,
                       )),
                 ),
 
@@ -97,24 +82,16 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                   onTap: () {
                     paintingNotifier.paintingType = PaintingType.neon;
                   },
-                  colorBorder:
-                      paintingNotifier.paintingType == PaintingType.neon
-                          ? Colors.black
-                          : Colors.white,
+                  colorBorder: paintingNotifier.paintingType == PaintingType.neon ? Colors.black : Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  backGroundColor:
-                      paintingNotifier.paintingType == PaintingType.neon
-                          ? Colors.white.withOpacity(0.9)
-                          : Colors.black12,
+                  backGroundColor: paintingNotifier.paintingType == PaintingType.neon
+                      ? Colors.white.withOpacity(0.9)
+                      : Colors.black12,
                   child: Transform.scale(
                       scale: 1.1,
                       child: ImageIcon(
-                        const AssetImage('assets/icons/neon.png',
-                            package: 'stories_editor'),
-                        color:
-                            paintingNotifier.paintingType == PaintingType.neon
-                                ? Colors.black
-                                : Colors.white,
+                        const AssetImage('assets/icons/neon.png', package: 'stories_editor'),
+                        color: paintingNotifier.paintingType == PaintingType.neon ? Colors.black : Colors.white,
                       )),
                 ),
 
@@ -129,8 +106,7 @@ class _TopPaintingToolsState extends State<TopPaintingTools> {
                   child: Transform.scale(
                       scale: 0.7,
                       child: const ImageIcon(
-                        AssetImage('assets/icons/check.png',
-                            package: 'stories_editor'),
+                        AssetImage('assets/icons/check.png', package: 'stories_editor'),
                         color: Colors.white,
                       )),
                 ),

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +17,7 @@ import 'package:stories_editor/src/presentation/widgets/size_slider_selector.dar
 
 class TextEditor extends StatefulWidget {
   final BuildContext context;
-  const TextEditor({Key? key, required this.context}) : super(key: key);
+  const TextEditor({super.key, required this.context});
 
   @override
   State<TextEditor> createState() => _TextEditorState();
@@ -28,10 +30,9 @@ class _TextEditorState extends State<TextEditor> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final _editorNotifier =
-          Provider.of<TextEditingNotifier>(widget.context, listen: false);
-      _editorNotifier
-        ..textController.text = _editorNotifier.text
+      final editorNotifier = Provider.of<TextEditingNotifier>(widget.context, listen: false);
+      editorNotifier
+        ..textController.text = editorNotifier.text
         ..fontFamilyController = PageController(viewportFraction: .125);
     });
     super.initState();
@@ -51,8 +52,7 @@ class _TextEditorState extends State<TextEditor> {
                 /// onTap => Close view and create/modify item object
                 onTap: () => _onTap(context, controlNotifier, editorNotifier),
                 child: Container(
-                    decoration:
-                        BoxDecoration(color: Colors.black.withOpacity(0.5)),
+                    decoration: BoxDecoration(color: Colors.black.withOpacity(0.5)),
                     height: screenUtil.screenHeight,
                     width: screenUtil.screenWidth,
                     child: Stack(
@@ -76,8 +76,7 @@ class _TextEditorState extends State<TextEditor> {
                         Align(
                             alignment: Alignment.topCenter,
                             child: TopTextTools(
-                              onDone: () => _onTap(
-                                  context, controlNotifier, editorNotifier),
+                              onDone: () => _onTap(context, controlNotifier, editorNotifier),
                             )),
 
                         /// font family selector (bottom)
@@ -85,8 +84,7 @@ class _TextEditorState extends State<TextEditor> {
                           // alignment: Alignment.bottomCenter,
                           bottom: MediaQuery.of(context).viewInsets.bottom - 80,
                           child: Visibility(
-                            visible: editorNotifier.isFontFamily &&
-                                !editorNotifier.isTextAnimation,
+                            visible: editorNotifier.isFontFamily && !editorNotifier.isTextAnimation,
                             child: const Align(
                               alignment: Alignment.bottomCenter,
                               child: Padding(
@@ -101,8 +99,7 @@ class _TextEditorState extends State<TextEditor> {
                         Positioned(
                           bottom: screenUtil.screenHeight * 0.21,
                           child: Visibility(
-                              visible: !editorNotifier.isFontFamily &&
-                                  !editorNotifier.isTextAnimation,
+                              visible: !editorNotifier.isFontFamily && !editorNotifier.isTextAnimation,
                               child: const Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Padding(
@@ -133,10 +130,8 @@ class _TextEditorState extends State<TextEditor> {
         ));
   }
 
-  void _onTap(context, ControlNotifier controlNotifier,
-      TextEditingNotifier editorNotifier) {
-    final _editableItemNotifier =
-        Provider.of<DraggableWidgetNotifier>(context, listen: false);
+  void _onTap(context, ControlNotifier controlNotifier, TextEditingNotifier editorNotifier) {
+    final editableItemNotifier = Provider.of<DraggableWidgetNotifier>(context, listen: false);
 
     /// create text list
     if (editorNotifier.text.trim().isNotEmpty) {
@@ -147,13 +142,13 @@ class _TextEditorState extends State<TextEditor> {
           sequenceList = splitList[0];
         } else {
           lastSequenceList = sequenceList;
-          editorNotifier.textList.add(sequenceList + ' ' + splitList[i]);
-          sequenceList = lastSequenceList + ' ' + splitList[i];
+          editorNotifier.textList.add('$sequenceList ${splitList[i]}');
+          sequenceList = '$lastSequenceList ${splitList[i]}';
         }
       }
 
       /// create Text Item
-      _editableItemNotifier.draggableWidget.add(EditableItem()
+      editableItemNotifier.draggableWidget.add(EditableItem()
         ..type = ItemType.text
         ..text = editorNotifier.text.trim()
         ..backGroundColor = editorNotifier.backGroundColor
@@ -163,8 +158,7 @@ class _TextEditorState extends State<TextEditor> {
         ..fontAnimationIndex = editorNotifier.fontAnimationIndex
         ..textAlign = editorNotifier.textAlign
         ..textList = editorNotifier.textList
-        ..animationType =
-            editorNotifier.animationList[editorNotifier.fontAnimationIndex]
+        ..animationType = editorNotifier.animationList[editorNotifier.fontAnimationIndex]
         ..position = const Offset(0.0, 0.0));
       editorNotifier.setDefaults();
       controlNotifier.isTextEditing = !controlNotifier.isTextEditing;

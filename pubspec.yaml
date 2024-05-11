@@ -4,7 +4,7 @@ version: 0.2.2
 homepage: https://github.com/camilo1498/stories_editor
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: ">=3.0.0 <3.16.0"
 
 dependencies:
   flutter:
@@ -13,9 +13,9 @@ dependencies:
   # state management
   provider: ^6.0.4
   # image
-  image: ^3.0.2
+  image: ^4.1.7
   path_provider: ^2.0.11
-  photo_view: ^0.14.0
+  photo_view: ^0.15.0
   # with this ref fix `Looking up a deactivated widget's ancestor is unsafe`.
   #photo_view:
   #  git:
@@ -23,14 +23,14 @@ dependencies:
   #    ref: 8156907eecfa812b181a5a729d790f6d399f311b
   image_gallery_saver: ^2.0.3
   #own packages
-  gallery_media_picker: ^0.1.0
+  # gallery_media_picker: ^0.1.0
 
 
   modal_gif_picker: ^0.0.2
   # painting
-  perfect_freehand: ^1.0.4
+  perfect_freehand: ^2.3.2
   # positioning
-  align_positioned: ^3.0.0
+  align_positioned: ^4.0.1
   #message
   fluttertoast: ^8.1.1
 
@@ -41,7 +41,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^4.0.0
 
 
 flutter:

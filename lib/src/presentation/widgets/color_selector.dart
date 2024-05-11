@@ -7,14 +7,13 @@ import 'package:stories_editor/src/domain/providers/notifiers/text_editing_notif
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
 
 class ColorSelector extends StatelessWidget {
-  const ColorSelector({Key? key}) : super(key: key);
+  const ColorSelector({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ScreenUtil screenUtil = ScreenUtil();
     return Consumer3<ControlNotifier, TextEditingNotifier, PaintingNotifier>(
-      builder:
-          (context, controlProvider, editorProvider, paintingProvider, child) {
+      builder: (context, controlProvider, editorProvider, paintingProvider, child) {
         return Container(
           height: screenUtil.screenWidth * 0.1,
           width: screenUtil.screenWidth,
@@ -34,15 +33,10 @@ class ColorSelector extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.white, width: 1.5)),
                 child: ImageIcon(
-                  const AssetImage('assets/icons/pickColor.png',
-                      package: 'stories_editor'),
+                  const AssetImage('assets/icons/pickColor.png', package: 'stories_editor'),
                   color: controlProvider.isPainting
-                      ? (paintingProvider.lineColor == 0
-                          ? Colors.black
-                          : Colors.white)
-                      : (editorProvider.textColor == 0
-                          ? Colors.black
-                          : Colors.white),
+                      ? (paintingProvider.lineColor == 0 ? Colors.black : Colors.white)
+                      : (editorProvider.textColor == 0 ? Colors.black : Colors.white),
                   size: 20,
                 ),
               ),
@@ -55,8 +49,7 @@ class ColorSelector extends StatelessWidget {
                   child: Row(
                     children: [
                       ...controlProvider.colorList!.map((color) {
-                        final int index =
-                            controlProvider.colorList!.indexOf(color);
+                        final int index = controlProvider.colorList!.indexOf(color);
                         return AnimatedOnTapButton(
                           onTap: () {
                             if (controlProvider.isPainting) {
@@ -74,8 +67,7 @@ class ColorSelector extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: controlProvider.colorList![index],
                                   shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: Colors.white, width: 1.5)),
+                                  border: Border.all(color: Colors.white, width: 1.5)),
                             ),
                           ),
                         );

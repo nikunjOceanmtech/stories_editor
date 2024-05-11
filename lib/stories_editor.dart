@@ -50,7 +50,7 @@ class StoriesEditor extends StatefulWidget {
   final int? galleryThumbnailQuality;
 
   const StoriesEditor(
-      {Key? key,
+      {super.key,
       required this.giphyKey,
       required this.onDone,
       this.middleBottomWidget,
@@ -61,20 +61,18 @@ class StoriesEditor extends StatefulWidget {
       this.onBackPress,
       this.onDoneButtonStyle,
       this.editorBackgroundColor,
-      this.galleryThumbnailQuality})
-      : super(key: key);
+      this.galleryThumbnailQuality});
 
   @override
-  _StoriesEditorState createState() => _StoriesEditorState();
+  StoriesEditorState createState() => StoriesEditorState();
 }
 
-class _StoriesEditorState extends State<StoriesEditor> {
+class StoriesEditorState extends State<StoriesEditor> {
   @override
   void initState() {
-    Paint.enableDithering = true;
+    // Paint.enableDithering = true;
     WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
     ));

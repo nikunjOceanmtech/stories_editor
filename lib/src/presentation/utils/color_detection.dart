@@ -33,7 +33,8 @@ class ColorDetection {
     double py = localPosition.dy;
 
     //int pixel32 = photo!.getPixelSafe(px.toInt(), py.toInt());
-    int pixel32 = photo!.getPixelSafe(px.toInt(), py.toInt());
+    int pixel32 = 10;
+    // int pixel32 = photo!.getPixelSafe(px.toInt(), py.toInt());
     int hex = abgrToArgb(pixel32);
 
     stateController!.add(Color(hex));
@@ -41,11 +42,9 @@ class ColorDetection {
   }
 
   Future<void> loadSnapshotBytes() async {
-    RenderRepaintBoundary? boxPaint =
-        paintKey!.currentContext!.findRenderObject() as RenderRepaintBoundary?;
+    RenderRepaintBoundary? boxPaint = paintKey!.currentContext!.findRenderObject() as RenderRepaintBoundary?;
     ui.Image capture = await boxPaint!.toImage();
-    ByteData? imageBytes =
-        await capture.toByteData(format: ui.ImageByteFormat.png);
+    ByteData? imageBytes = await capture.toByteData(format: ui.ImageByteFormat.png);
     setImageBytes(imageBytes!);
     capture.dispose();
   }
