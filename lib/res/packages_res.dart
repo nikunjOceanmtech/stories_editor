@@ -26,4 +26,7 @@ class PackagesRes {
   static const String TRASH = 'packages/stories_editor/assets/icons/trash.png';
   static const String VIDEO_TRIM = 'packages/stories_editor/assets/icons/video_trim.png';
   static const String INSTAGRAM_LOGO = 'packages/stories_editor/assets/images/instagram_logo.png';
+  static const String BACK_ARROW = 'packages/stories_editor/assets/icons/back_arrow.png';
+  static const String MUSIC_ICON = 'packages/stories_editor/assets/icons/music.png';
+  static const String EFFECT_ICON = 'packages/stories_editor/assets/icons/effect.png';
 }

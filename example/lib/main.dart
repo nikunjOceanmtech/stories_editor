@@ -37,18 +37,37 @@ class _ExampleState extends State<Example> {
           child: ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => StoriesEditor(
-                            giphyKey: 'API KEY',
-                            //fontFamilyList: const ['Shizuru', 'Aladin'],
-                            galleryThumbnailQuality: 300,
-                            //isCustomFontList: true,
-                            onDone: (uri) {
-                              debugPrint(uri);
-                              // Share.shareFiles([uri]);
-                            },
-                          )));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => StoriesEditor(
+                    videoView: Container(
+                      color: Colors.amber,
+                    ),
+                    nextButton: Container(
+                      height: 50,
+                      width: 150,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(80),
+                        color: const Color(0xff084277),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("data"),
+                        ],
+                      ),
+                    ),
+                    onDownloadTap: () {},
+                    onEffectTap: () {},
+                    onMusicTap: () {},
+                    galleryThumbnailQuality: 300,
+                    onDone: (uri) {
+                      debugPrint(uri);
+                    },
+                  ),
+                ),
+              );
             },
             child: const Text('Open Stories Editor'),
           ),
