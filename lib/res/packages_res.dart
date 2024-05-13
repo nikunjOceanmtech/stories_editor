@@ -29,4 +29,10 @@ class PackagesRes {
   static const String BACK_ARROW = 'packages/stories_editor/assets/icons/back_arrow.png';
   static const String MUSIC_ICON = 'packages/stories_editor/assets/icons/music.png';
   static const String EFFECT_ICON = 'packages/stories_editor/assets/icons/effect.png';
+  static const String ALIEN_ICON = 'packages/stories_editor/assets/icons/alien.png';
+  static const String SMILE_ICON = 'packages/stories_editor/assets/icons/smile.png';
+  static const String HAPPY_FACE_ICON = 'packages/stories_editor/assets/icons/happy_face.png';
+  static const String EMOJI_ICON = 'packages/stories_editor/assets/icons/emoji.png';
+  static const String COOL_ICON = 'packages/stories_editor/assets/icons/cool.png';
+  static const String BLACKHOLE_ICON = 'packages/stories_editor/assets/icons/blackhole.png';
 }

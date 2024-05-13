@@ -37,7 +37,6 @@ dependencies:
 
   animated_text_kit: ^4.2.2
 
-  flutter_screenutil: ^5.6.0
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +73,12 @@ flutter:
     - packages/stories_editor/assets/icons/back_arrow.png
     - packages/stories_editor/assets/icons/music.png
     - packages/stories_editor/assets/icons/effect.png
+    - packages/stories_editor/assets/icons/alien.png
+    - packages/stories_editor/assets/icons/smile.png
+    - packages/stories_editor/assets/icons/happy_face.png
+    - packages/stories_editor/assets/icons/emoji.png
+    - packages/stories_editor/assets/icons/cool.png
+    - packages/stories_editor/assets/icons/blackhole.png
 
   fonts:
 

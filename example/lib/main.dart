@@ -34,43 +34,67 @@ class _ExampleState extends State<Example> {
         backgroundColor: Colors.black,
         resizeToAvoidBottomInset: false,
         body: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => StoriesEditor(
-                    videoView: Container(
-                      color: Colors.amber,
+          child: 1 == 1
+              ? StoriesEditor(
+                  videoView: Container(color: Colors.amber),
+                  nextButton: Container(
+                    height: 50,
+                    width: 150,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(80),
+                      color: const Color(0xff084277),
                     ),
-                    nextButton: Container(
-                      height: 50,
-                      width: 150,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(80),
-                        color: const Color(0xff084277),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("data"),
-                        ],
-                      ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("data"),
+                      ],
                     ),
-                    onDownloadTap: () {},
-                    onEffectTap: () {},
-                    onMusicTap: () {},
-                    galleryThumbnailQuality: 300,
-                    onDone: (uri) {
-                      debugPrint(uri);
-                    },
                   ),
+                  onDownloadTap: () {},
+                  onEffectTap: () {},
+                  isShowFilterIcon: false,
+                  onFilterCancelTap: () {},
+                  onFilterDoneTap: () {},
+                  onMusicTap: () {},
+                )
+              : ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StoriesEditor(
+                          videoView: Container(
+                            color: Colors.amber,
+                          ),
+                          nextButton: Container(
+                            height: 50,
+                            width: 150,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(80),
+                              color: const Color(0xff084277),
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("data"),
+                              ],
+                            ),
+                          ),
+                          onDownloadTap: () {},
+                          onEffectTap: () {},
+                          isShowFilterIcon: true,
+                          onFilterCancelTap: () {},
+                          onFilterDoneTap: () {},
+                          onMusicTap: () {},
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Open Stories Editor'),
                 ),
-              );
-            },
-            child: const Text('Open Stories Editor'),
-          ),
         ));
   }
 }

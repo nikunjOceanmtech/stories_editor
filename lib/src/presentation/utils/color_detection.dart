@@ -5,7 +5,35 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
+import 'package:modal_gif_picker/modal_gif_picker.dart';
 import 'dart:ui' as ui;
+
+import 'package:provider/provider.dart';
+import 'package:stories_editor/src/domain/models/editable_items.dart';
+import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
+import 'package:stories_editor/src/presentation/utils/constants/app_enums.dart';
+
+Future createGiphyItem({required BuildContext context}) async {
+  final editableItem = Provider.of<DraggableWidgetNotifier>(context, listen: false);
+
+  editableItem.giphy = await ModalGifPicker.pickModalSheetGif(
+    context: context,
+    apiKey: "JnO9EYt0BHPxIGK3GB0CBXEqPzlrH20t",
+    rating: GiphyRating.r,
+    sticker: true,
+    backDropColor: Colors.black,
+    crossAxisCount: 3,
+    childAspectRatio: 1.2,
+    topDragColor: Colors.white.withOpacity(0.2),
+  );
+
+  if (editableItem.giphy != null) {
+    editableItem.draggableWidget.add(EditableItem()
+      ..type = ItemType.gif
+      ..gif = editableItem.giphy ?? GiphyGif(id: '', url: "")
+      ..position = const Offset(0.0, 0.0));
+  }
+}
 
 class ColorDetection {
   final GlobalKey? currentKey;

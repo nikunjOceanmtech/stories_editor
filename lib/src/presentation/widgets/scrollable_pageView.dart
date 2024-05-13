@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class ScrollablePageView extends StatefulWidget {
   Widget mainView;
-  Widget gallery;
   final bool scrollPhysics;
   PageController pageController;
   ScrollController gridController;
@@ -14,7 +13,6 @@ class ScrollablePageView extends StatefulWidget {
   ScrollablePageView({
     super.key,
     required this.mainView,
-    required this.gallery,
     required this.scrollPhysics,
     required this.pageController,
     required this.gridController,
@@ -45,9 +43,12 @@ class ScrollablePageViewState extends State<ScrollablePageView> {
 
   void _handleDragStart(DragStartDetails details) {
     if (_listScrollController!.hasClients) {
-      final RenderBox renderBox =
-          _listScrollController!.position.context.storageContext.findRenderObject() as RenderBox;
-      if (renderBox.paintBounds.shift(renderBox.localToGlobal(Offset.zero)).contains(details.globalPosition)) {
+      final RenderBox renderBox = _listScrollController!
+          .position.context.storageContext
+          .findRenderObject() as RenderBox;
+      if (renderBox.paintBounds
+          .shift(renderBox.localToGlobal(Offset.zero))
+          .contains(details.globalPosition)) {
         _activeScrollController = _listScrollController;
         _drag = _activeScrollController!.position.drag(details, _disposeDrag);
         return;
@@ -60,11 +61,15 @@ class ScrollablePageViewState extends State<ScrollablePageView> {
   void _handleDragUpdate(DragUpdateDetails details) {
     if (_activeScrollController == _listScrollController &&
         details.primaryDelta! > 0 &&
-        _activeScrollController!.position.pixels == _activeScrollController!.position.minScrollExtent) {
+        _activeScrollController!.position.pixels ==
+            _activeScrollController!.position.minScrollExtent) {
       _activeScrollController = _pageController;
       _drag?.cancel();
       _drag = _pageController!.position.drag(
-          DragStartDetails(globalPosition: details.globalPosition, localPosition: details.localPosition), _disposeDrag);
+          DragStartDetails(
+              globalPosition: details.globalPosition,
+              localPosition: details.localPosition),
+          _disposeDrag);
     }
     _drag?.update(details);
   }
@@ -86,8 +91,10 @@ class ScrollablePageViewState extends State<ScrollablePageView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
     return RawGestureDetector(
       gestures: <Type, GestureRecognizerFactory>{
-        VerticalDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<VerticalDragGestureRecognizer>(
-            () => VerticalDragGestureRecognizer(), (VerticalDragGestureRecognizer instance) {
+        VerticalDragGestureRecognizer:
+            GestureRecognizerFactoryWithHandlers<VerticalDragGestureRecognizer>(
+                () => VerticalDragGestureRecognizer(),
+                (VerticalDragGestureRecognizer instance) {
           if (widget.scrollPhysics) {
             instance
               ..onStart = _handleDragStart
@@ -108,7 +115,7 @@ class ScrollablePageViewState extends State<ScrollablePageView> {
         controller: _pageController,
         scrollDirection: Axis.vertical,
         physics: const NeverScrollableScrollPhysics(),
-        children: [widget.mainView, widget.gallery],
+        children: [widget.mainView],
       ),
     );
   }

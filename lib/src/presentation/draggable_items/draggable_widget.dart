@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:align_positioned/align_positioned.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:modal_gif_picker/modal_gif_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:stories_editor/src/domain/models/editable_items.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
@@ -32,108 +30,80 @@ class DraggableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScreenUtil screenUtil = ScreenUtil();
     var colorProvider = Provider.of<GradientNotifier>(this.context, listen: false);
     var controlProvider = Provider.of<ControlNotifier>(this.context, listen: false);
     Widget? overlayWidget;
 
-    switch (draggableWidget.type) {
-      case ItemType.text:
-        overlayWidget = IntrinsicWidth(
-          child: IntrinsicHeight(
-            child: Container(
-              constraints: BoxConstraints(
-                minHeight: 50,
-                minWidth: 50,
-                maxWidth: screenUtil.screenWidth - 240.w,
-              ),
-              width: draggableWidget.deletePosition ? 100 : null,
-              height: draggableWidget.deletePosition ? 100 : null,
-              child: AnimatedOnTapButton(
-                onTap: () => _onTap(context, draggableWidget, controlProvider),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Center(
-                      child:
-                          _text(background: true, paintingStyle: PaintingStyle.fill, controlNotifier: controlProvider),
+    if (draggableWidget.type == ItemType.text) {
+      overlayWidget = IntrinsicWidth(
+        child: IntrinsicHeight(
+          child: Container(
+            constraints: BoxConstraints(
+              minHeight: 50,
+              minWidth: 50,
+              maxWidth: MediaQuery.of(context).size.width - 240,
+            ),
+            width: draggableWidget.deletePosition ? 100 : null,
+            height: draggableWidget.deletePosition ? 100 : null,
+            child: AnimatedOnTapButton(
+              onTap: () => _onTap(context, draggableWidget, controlProvider),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Center(
+                    child: _text(
+                      background: true,
+                      paintingStyle: PaintingStyle.fill,
+                      controlNotifier: controlProvider,
                     ),
-                    IgnorePointer(
-                      ignoring: true,
-                      child: Center(
-                        child: _text(
-                            background: true, paintingStyle: PaintingStyle.stroke, controlNotifier: controlProvider),
+                  ),
+                  IgnorePointer(
+                    ignoring: true,
+                    child: Center(
+                      child: _text(
+                        background: true,
+                        paintingStyle: PaintingStyle.stroke,
+                        controlNotifier: controlProvider,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 2.5, top: 2),
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: _text(paintingStyle: PaintingStyle.fill, controlNotifier: controlProvider),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 2.5, top: 2),
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: _text(paintingStyle: PaintingStyle.fill, controlNotifier: controlProvider),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
           ),
-        );
-        break;
-
-      /// image [file_image_gb.dart]
-      case ItemType.image:
-        if (controlProvider.mediaPath.isNotEmpty) {
-          overlayWidget = SizedBox(
-            width: screenUtil.screenWidth - 144.w,
-            child: FileImageBG(
-              filePath: File(controlProvider.mediaPath),
-              generatedGradient: (color1, color2) {
-                colorProvider.color1 = color1;
-                colorProvider.color2 = color2;
-              },
-            ),
-          );
-        } else {
-          overlayWidget = Container();
-        }
-
-        break;
-
-      case ItemType.gif:
-        overlayWidget = SizedBox(
-          width: 150,
-          height: 150,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              /// create Gif widget
-              Center(
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.transparent),
-                  child: GiphyRenderImage.original(gif: draggableWidget.gif),
-                ),
-              ),
-            ],
-          ),
-        );
-        break;
-
-      case ItemType.video:
-        overlayWidget = const Center();
+        ),
+      );
+    } else if (draggableWidget.type == ItemType.image) {
+      overlayWidget = const SizedBox.shrink();
+    } else if (draggableWidget.type case ItemType.gif) {
+      overlayWidget = FileImageBG(
+        filePath: File(""),
+        generatedGradient: (color1, color2) {
+          colorProvider.color1 = color1;
+          colorProvider.color2 = color2;
+        },
+        child: draggableWidget.child!,
+      );
+    } else if (draggableWidget.type == ItemType.video) {
+      overlayWidget = const Center();
     }
 
-    /// set widget data position on main screen
     return AnimatedAlignPositioned(
       duration: const Duration(milliseconds: 50),
       dy: (draggableWidget.deletePosition
           ? _deleteTopOffset()
-          : (draggableWidget.position.dy * screenUtil.screenHeight)),
-      dx: (draggableWidget.deletePosition ? 0 : (draggableWidget.position.dx * screenUtil.screenWidth)),
+          : (draggableWidget.position.dy * MediaQuery.of(context).size.height)),
+      dx: (draggableWidget.deletePosition ? 0 : (draggableWidget.position.dx * MediaQuery.of(context).size.width)),
       alignment: Alignment.center,
       child: Transform.scale(
         scale: draggableWidget.deletePosition ? _deleteScale() : draggableWidget.scale,
@@ -143,8 +113,6 @@ class DraggableWidget extends StatelessWidget {
             onPointerDown: onPointerDown,
             onPointerUp: onPointerUp,
             onPointerMove: onPointerMove,
-
-            /// show widget
             child: overlayWidget,
           ),
         ),
@@ -223,12 +191,11 @@ class DraggableWidget extends StatelessWidget {
 
   _deleteTopOffset() {
     double top = 0.0;
-    final ScreenUtil screenUtil = ScreenUtil();
     if (draggableWidget.type == ItemType.text) {
-      top = screenUtil.screenWidth / 1.2;
+      top = MediaQuery.of(context).size.width / 1.2;
       return top;
     } else if (draggableWidget.type == ItemType.gif) {
-      top = screenUtil.screenWidth / 1.18;
+      top = MediaQuery.of(context).size.width / 1.18;
       return top;
     }
   }
