@@ -1,8 +1,12 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use, unused_local_variable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:stories_editor/src/domain/models/editable_items.dart';
 import 'package:stories_editor/src/domain/models/painting_model.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
@@ -28,7 +32,6 @@ class MainView extends StatefulWidget {
   final Widget? onDoneButtonStyle;
   final Future<bool>? onBackPress;
   Color? editorBackgroundColor;
-  final Widget nextButton;
   final Widget videoView;
   final bool isShowFilterIcon;
   final void Function() onMusicTap;
@@ -36,6 +39,7 @@ class MainView extends StatefulWidget {
   final void Function() onDownloadTap;
   final void Function() onFilterDoneTap;
   final void Function() onFilterCancelTap;
+  final void Function(String imagePath) onNextButtonTap;
 
   MainView({
     super.key,
@@ -48,11 +52,11 @@ class MainView extends StatefulWidget {
     required this.onMusicTap,
     required this.onEffectTap,
     required this.onDownloadTap,
-    required this.nextButton,
     required this.videoView,
     required this.isShowFilterIcon,
     required this.onFilterCancelTap,
     required this.onFilterDoneTap,
+    required this.onNextButtonTap,
   });
 
   @override
@@ -68,6 +72,8 @@ class MainViewState extends State<MainView> {
   double _currentRotation = 0;
   bool isDeletePosition = false;
   bool _inAction = false;
+
+  ScreenshotController screenshotController = ScreenshotController();
 
   @override
   void initState() {
@@ -128,10 +134,13 @@ class MainViewState extends State<MainView> {
                                   width: MediaQuery.of(context).size.width,
                                   child: RepaintBoundary(
                                     key: contentKey,
-                                    child: dataView(
-                                      itemProvider: itemProvider,
-                                      context: context,
-                                      paintingProvider: paintingProvider,
+                                    child: Screenshot(
+                                      controller: screenshotController,
+                                      child: dataView(
+                                        itemProvider: itemProvider,
+                                        context: context,
+                                        paintingProvider: paintingProvider,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -175,8 +184,38 @@ class MainViewState extends State<MainView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        widget.nextButton,
-                        const SizedBox(width: 20),
+                        InkWell(
+                          onTap: () async {
+                            String imagePath = "";
+                            await screenshotController.capture().then((image) async {
+                              if (image != null) {
+                                File file = File(await setFileInDevice('tempStickerImage.png'));
+                                file.writeAsBytes(image);
+                                imagePath = file.path;
+                              }
+                            });
+                            if (imagePath.isNotEmpty) {
+                              widget.onNextButtonTap(imagePath);
+                            } else {}
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              color: const Color(0xff084277),
+                              borderRadius: BorderRadius.circular(80),
+                            ),
+                            child: const Text(
+                              "Next",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
                       ],
                     ),
                   ],
@@ -187,6 +226,22 @@ class MainViewState extends State<MainView> {
         ),
       ),
     );
+  }
+
+  Future<String> commonDirectoryGet() async {
+    final directory = await getTemporaryDirectory();
+    final Directory directoryFolder = Directory('${directory.path}/shortsVideo/');
+    if (await directoryFolder.exists()) {
+      return '${directory.path}/shortsVideo';
+    } else {
+      await directoryFolder.create(recursive: true);
+      return '${directory.path}/shortsVideo';
+    }
+  }
+
+  Future<String> setFileInDevice(String fileName) async {
+    final directory = await commonDirectoryGet();
+    return '$directory/$fileName';
   }
 
   Widget dataView({
@@ -287,8 +342,10 @@ class MainViewState extends State<MainView> {
   }
 
   void deletePosition(EditableItem item, PointerMoveEvent details) {
+    var itemProvider = Provider.of<DraggableWidgetNotifier>(context, listen: false).draggableWidget;
     if (item.type == ItemType.text && item.position.dy >= 0.25 && item.position.dx >= -0.2 && item.position.dx <= 0.2) {
       setState(() {
+        // itemProvider.removeAt(itemProvider.indexOf(item));
         isDeletePosition = true;
         item.deletePosition = true;
       });

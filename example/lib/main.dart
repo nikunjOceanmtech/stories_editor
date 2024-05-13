@@ -31,70 +31,47 @@ class _ExampleState extends State<Example> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        resizeToAvoidBottomInset: false,
-        body: Center(
-          child: 1 == 1
-              ? StoriesEditor(
-                  videoView: Container(color: Colors.amber),
-                  nextButton: Container(
-                    height: 50,
-                    width: 150,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(80),
-                      color: const Color(0xff084277),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("data"),
-                      ],
-                    ),
-                  ),
-                  onDownloadTap: () {},
-                  onEffectTap: () {},
-                  isShowFilterIcon: false,
-                  onFilterCancelTap: () {},
-                  onFilterDoneTap: () {},
-                  onMusicTap: () {},
-                )
-              : ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => StoriesEditor(
-                          videoView: Container(
-                            color: Colors.amber,
-                          ),
-                          nextButton: Container(
-                            height: 50,
-                            width: 150,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(80),
-                              color: const Color(0xff084277),
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("data"),
-                              ],
-                            ),
-                          ),
-                          onDownloadTap: () {},
-                          onEffectTap: () {},
-                          isShowFilterIcon: true,
-                          onFilterCancelTap: () {},
-                          onFilterDoneTap: () {},
-                          onMusicTap: () {},
+      backgroundColor: Colors.black,
+      resizeToAvoidBottomInset: false,
+      body: Center(
+        child: 1 == 1
+            ? StoriesEditor(
+                videoView: Container(color: Colors.white),
+                onNextButtonTap: (imagePath) {
+                  print("=========$imagePath");
+                },
+                onDownloadTap: () {},
+                onEffectTap: () {},
+                isShowFilterIcon: false,
+                onFilterCancelTap: () {},
+                onFilterDoneTap: () {},
+                onMusicTap: () {},
+              )
+            : ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => StoriesEditor(
+                        videoView: Container(
+                          color: Colors.amber,
                         ),
+                        onNextButtonTap: (imagePath) {
+                          print("=========$imagePath");
+                        },
+                        onDownloadTap: () {},
+                        onEffectTap: () {},
+                        isShowFilterIcon: true,
+                        onFilterCancelTap: () {},
+                        onFilterDoneTap: () {},
+                        onMusicTap: () {},
                       ),
-                    );
-                  },
-                  child: const Text('Open Stories Editor'),
-                ),
-        ));
+                    ),
+                  );
+                },
+                child: const Text('Open Stories Editor'),
+              ),
+      ),
+    );
   }
 }

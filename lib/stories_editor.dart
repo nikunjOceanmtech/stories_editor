@@ -26,7 +26,7 @@ class StoriesEditor extends StatefulWidget {
   final void Function() onDownloadTap;
   final void Function() onFilterDoneTap;
   final void Function() onFilterCancelTap;
-  final Widget nextButton;
+  final void Function(String imagePath) onNextButtonTap;
   final Widget videoView;
   final bool isShowFilterIcon;
 
@@ -41,11 +41,11 @@ class StoriesEditor extends StatefulWidget {
     required this.onMusicTap,
     required this.onEffectTap,
     required this.onDownloadTap,
-    required this.nextButton,
     required this.videoView,
     required this.isShowFilterIcon,
     required this.onFilterCancelTap,
     required this.onFilterDoneTap,
+    required this.onNextButtonTap,
   });
 
   @override
@@ -57,8 +57,7 @@ class StoriesEditorState extends State<StoriesEditor> {
   void initState() {
     // Paint.enableDithering = true;
     WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
     ));
@@ -98,7 +97,7 @@ class StoriesEditorState extends State<StoriesEditor> {
           onMusicTap: widget.onMusicTap,
           onEffectTap: widget.onEffectTap,
           onDownloadTap: widget.onDownloadTap,
-          nextButton: widget.nextButton,
+          onNextButtonTap: widget.onNextButtonTap,
           videoView: widget.videoView,
           isShowFilterIcon: widget.isShowFilterIcon,
           onFilterCancelTap: widget.onFilterCancelTap,

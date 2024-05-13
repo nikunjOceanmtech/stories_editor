@@ -33,21 +33,21 @@ class FileImageBGState extends State<FileImageBG> {
     Timer.periodic(
       const Duration(milliseconds: 500),
       (callback) async {
-        if (imageKey.currentState!.context.size!.height == 0.0) {
+        if (imageKey.currentState?.context.size!.height == 0.0) {
         } else {
           var cd1 = await ColorDetection(
             currentKey: currentKey,
             paintKey: paintKey,
             stateController: stateController,
           ).searchPixel(
-            Offset(imageKey.currentState!.context.size!.width / 2, 480),
+            Offset((imageKey.currentState?.context.size!.width ?? 0) / 2, 480),
           );
           var cd12 = await ColorDetection(
             currentKey: currentKey,
             paintKey: paintKey,
             stateController: stateController,
           ).searchPixel(
-            Offset(imageKey.currentState!.context.size!.width / 2.03, 530),
+            Offset((imageKey.currentState?.context.size!.width ?? 0) / 2.03, 530),
           );
           color1 = cd1;
           color2 = cd12;
