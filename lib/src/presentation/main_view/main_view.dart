@@ -187,13 +187,15 @@ class MainViewState extends State<MainView> {
                         InkWell(
                           onTap: () async {
                             String imagePath = "";
-                            await screenshotController.capture().then((image) async {
-                              if (image != null) {
-                                File file = File(await setFileInDevice('tempStickerImage.png'));
-                                file.writeAsBytes(image);
-                                imagePath = file.path;
-                              }
-                            });
+                            await screenshotController.capture().then(
+                              (image) async {
+                                if (image != null) {
+                                  File file = File(await setFileInDevice('tempStickerImage.png'));
+                                  file.writeAsBytes(image);
+                                  imagePath = file.path;
+                                }
+                              },
+                            );
                             if (imagePath.isNotEmpty) {
                               widget.onNextButtonTap(imagePath);
                             } else {}
@@ -343,14 +345,13 @@ class MainViewState extends State<MainView> {
 
   void deletePosition(EditableItem item, PointerMoveEvent details) {
     var itemProvider = Provider.of<DraggableWidgetNotifier>(context, listen: false).draggableWidget;
-    if (item.type == ItemType.text && item.position.dy >= 0.25 && item.position.dx >= -0.2 && item.position.dx <= 0.2) {
+    if (item.type == ItemType.text && item.position.dy >= 0.3 && item.position.dx >= -0.2 && item.position.dx <= 0.2) {
       setState(() {
-        // itemProvider.removeAt(itemProvider.indexOf(item));
         isDeletePosition = true;
         item.deletePosition = true;
       });
     } else if (item.type == ItemType.gif &&
-        item.position.dy >= 0.62 &&
+        item.position.dy >= 0.3 &&
         item.position.dx >= -0.35 &&
         item.position.dx <= 0.15) {
       setState(() {
@@ -369,14 +370,14 @@ class MainViewState extends State<MainView> {
     var itemProvider = Provider.of<DraggableWidgetNotifier>(context, listen: false).draggableWidget;
     _inAction = false;
     if (item.type == ItemType.image) {
-    } else if (item.type == ItemType.text &&
-            item.position.dy >= 0.75 &&
-            item.position.dx >= -0.4 &&
-            item.position.dx <= 0.2 ||
-        item.type == ItemType.gif &&
-            item.position.dy >= 0.62 &&
+    } else if ((item.type == ItemType.text &&
+            item.position.dy >= 0.3 &&
             item.position.dx >= -0.35 &&
-            item.position.dx <= 0.15) {
+            item.position.dx <= 0.15) ||
+        (item.type == ItemType.gif &&
+            item.position.dy >= 0.3 &&
+            item.position.dx >= -0.35 &&
+            item.position.dx <= 0.15)) {
       setState(() {
         itemProvider.removeAt(itemProvider.indexOf(item));
         HapticFeedback.heavyImpact();

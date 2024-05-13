@@ -37,9 +37,7 @@ class _ExampleState extends State<Example> {
         child: 1 == 1
             ? StoriesEditor(
                 videoView: Container(color: Colors.white),
-                onNextButtonTap: (imagePath) {
-                  print("=========$imagePath");
-                },
+                onNextButtonTap: (imagePath) {},
                 onDownloadTap: () {},
                 onEffectTap: () {},
                 isShowFilterIcon: false,
@@ -56,9 +54,7 @@ class _ExampleState extends State<Example> {
                         videoView: Container(
                           color: Colors.amber,
                         ),
-                        onNextButtonTap: (imagePath) {
-                          print("=========$imagePath");
-                        },
+                        onNextButtonTap: (imagePath) {},
                         onDownloadTap: () {},
                         onEffectTap: () {},
                         isShowFilterIcon: true,

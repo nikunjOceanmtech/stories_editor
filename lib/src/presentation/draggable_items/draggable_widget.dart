@@ -103,7 +103,7 @@ class DraggableWidget extends StatelessWidget {
     return AnimatedAlignPositioned(
       duration: const Duration(milliseconds: 50),
       dy: (draggableWidget.deletePosition
-          ? -10000
+          ? deleteTopOffset()
           : (draggableWidget.position.dy * MediaQuery.of(context).size.height)),
       dx: (draggableWidget.deletePosition ? 0 : (draggableWidget.position.dx * MediaQuery.of(context).size.width)),
       alignment: Alignment.center,
@@ -193,13 +193,10 @@ class DraggableWidget extends StatelessWidget {
   }
 
   deleteScale() {
-    double scale = 0.0;
     if (draggableWidget.type == ItemType.text) {
-      scale = 0.4;
-      return scale;
+      return 0.4;
     } else if (draggableWidget.type == ItemType.gif) {
-      scale = 0.3;
-      return scale;
+      return 0.1;
     }
   }
 
@@ -225,7 +222,17 @@ class DraggableWidget extends StatelessWidget {
       viewportFraction: .1,
     );
 
-    /// create new text item
     controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
+  }
+
+  deleteTopOffset() {
+    double top = 0.0;
+    if (draggableWidget.type == ItemType.text) {
+      top = MediaQuery.of(context).size.width / 1.40;
+      return top;
+    } else if (draggableWidget.type == ItemType.gif) {
+      top = MediaQuery.of(context).size.width / 1.40;
+      return top;
+    }
   }
 }

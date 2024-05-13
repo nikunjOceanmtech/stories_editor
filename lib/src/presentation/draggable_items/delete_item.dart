@@ -25,9 +25,7 @@ class DeleteItem extends StatelessWidget {
       child: AnimatedScale(
         curve: Curves.easeIn,
         duration: const Duration(milliseconds: 200),
-        scale: _activeItem != null && _activeItem!.type != ItemType.image
-            ? 1.0
-            : 0.0,
+        scale: _activeItem != null && _activeItem!.type != ItemType.image ? 1.0 : 0.0,
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Center(
